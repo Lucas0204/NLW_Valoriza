@@ -8,7 +8,7 @@ class CreateUserController {
 
         const createUserService = new CreateUserService()
 
-        const user = await createUserService.execute({ 
+        await createUserService.execute({ 
             name, 
             email, 
             admin 
