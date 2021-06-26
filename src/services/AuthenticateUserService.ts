@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm'
 import { UsersRepositories } from '../repositories/UsersRepositories'
 import { compareSync } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
+import { AuthenticateError } from '../customErrors/usersErrors'
 
 interface IAuthenticateRequest {
     email: string;
@@ -17,14 +18,14 @@ class AuthenticateUserService {
         const user = await usersRepositories.findOne({ email })
 
         if (!user) {
-            throw new Error('Email/Password incorrect!')
+            throw new AuthenticateError()
         }
 
         // Verificar se a senha está correta
         const passwordMatch = compareSync(password, user.password)
 
         if (!passwordMatch) {
-            throw new Error('Email/Password incorrect!')
+            throw new AuthenticateError()
         }
 
         // Gerar token

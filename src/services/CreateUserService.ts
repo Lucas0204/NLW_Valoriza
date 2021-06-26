@@ -15,7 +15,7 @@ class CreateUserService {
         const usersRepositories = getCustomRepository(UsersRepositories)
 
         if (!email) {
-            throw new Error('Email incorrect.')
+            throw new AuthenticateError('Email incorrect.')
         }
 
         const emailAlreadyExists = await usersRepositories.findOne({ email })

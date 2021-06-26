@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm'
 import { ComplimentsRepositories } from '../repositories/ComplimentsRepositories'
 import { TagsRepositories } from '../repositories/TagsRepositories'
 import { UsersRepositories } from '../repositories/UsersRepositories'
+import { AuthenticateError } from '../customErrors/complimentsError'
 
 interface IComplimentRequest {
     tag_id: string;
@@ -19,14 +20,14 @@ class CreateComlimentService {
 
         // Verificar se o usuário não está mandando para ele mesmo
         if (user_sender === user_receiver) {
-            throw new Error('User receiver incorrect!')
+            throw new AuthenticateError('User receiver incorrect!')
         }
 
         // Verificar se existe um usuário para receber o elogio
         const userReceiver = await usersRepositories.findOne(user_receiver)
 
         if (!userReceiver) {
-            throw new Error('User receiver does not exists!')
+            throw new AuthenticateError('User receiver does not exists!')
         }
 
         // Verificar se a Tag existe

@@ -1,4 +1,4 @@
-import { DomainError } from './createDomainError'
+import { DomainError } from './DomainError'
 
 class ExistingUserError extends DomainError {
 
@@ -14,7 +14,7 @@ class AuthenticateError extends DomainError {
 
     constructor(message: string = '') {
 
-        const errorMessage = message ? message : 'Error! Email or Password incorrect'
+        const errorMessage = message !== '' ? message : 'Error! Email or Password incorrect!'
 
         super(errorMessage)
     }
