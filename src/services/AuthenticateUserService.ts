@@ -3,6 +3,8 @@ import { UsersRepositories } from '../repositories/UsersRepositories'
 import { compareSync } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 import { AuthenticateError } from '../customErrors/usersErrors'
+import { config } from 'dotenv'
+config()
 
 interface IAuthenticateRequest {
     email: string;
@@ -32,7 +34,7 @@ class AuthenticateUserService {
         const token = sign({
             email: user.email
         }, 
-        '6425ddbf9cd648e1e4d33c4340d3373d', 
+        process.env.JWT_SECRET, 
         {
             subject: user.id,
             expiresIn: '1d'
